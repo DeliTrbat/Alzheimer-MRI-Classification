@@ -4,16 +4,27 @@
 import os
 import random
 import shutil
+import tqdm
 
 ORIGINAL_DATASET_DIR = 'OriginalDataset'
 SPLIT_DATASET_DIR = 'SplitDataset'
 
+BAR_FORMAT = '{l_bar}{bar}| {n_fmt}/{total_fmt} files'
+
 
 def add_images(to_path: str, from_path: str, image_name_list: list):
+    pbar = tqdm.tqdm(
+        unit="files", total=len(image_name_list),
+        desc="Copying files to " + to_path,
+        bar_format=BAR_FORMAT
+    )
     for image in image_name_list:
         if not os.path.exists(to_path):
             os.makedirs(to_path)
         shutil.copy(os.path.join(from_path, image), to_path)
+
+        pbar.update(1)
+    pbar.close()
 
 
 def split_data(subfolder: str):

@@ -4,6 +4,7 @@ import numpy as np
 import os
 import albumentations as A
 import cv2
+import tqdm
 
 IMAGE_SIZE = 210
 
@@ -53,17 +54,39 @@ def augment_image(from_image_path):
         cv2.imwrite(to_image_path, image_aug)
 
 
+BAR_FORMAT = '{l_bar}{bar}| {n_fmt}/{total_fmt} files'
+
+
 def augment_folder_recursive(folder_path):
-    for file in os.listdir(folder_path):
-        file_path = os.path.join(folder_path, file)
-        if os.path.isdir(file_path):
-            augment_folder_recursive(file_path)
+    directories, files = [], []
+    for entry in os.scandir(folder_path):
+        if entry.is_dir():
+            directories.append(entry.path)
         else:
-            if file_path.endswith(".jpg"):
-                augment_image(file_path)
+            files.append(entry.path)
+
+    for directories in directories:
+        augment_folder_recursive(directories)
+
+    if len(files) == 0:
+        return
+
+    pbar = tqdm.tqdm(
+        total=len(files), desc="Augmenting... " +
+        folder_path, bar_format=BAR_FORMAT
+    )
+    for file in files:
+        augment_image(file)
+        pbar.update(1)
+
+    pbar.close()
 
 
-if __name__ == "__main__":
+def main():
     if os.path.exists(AUGMENTED_DATASET_PATH):
         shutil.rmtree(AUGMENTED_DATASET_PATH)
     augment_folder_recursive(ORIGINAL_DATASET_PATH)
+
+
+if __name__ == "__main__":
+    main()
