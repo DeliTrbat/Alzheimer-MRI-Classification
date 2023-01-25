@@ -3,8 +3,8 @@
 ### Installation
 
 ```bash
-pip install -r requirements.txt
 cd .\data_generator\
+pip install -r requirements.txt
 python main.py
 cd ..
 ```
