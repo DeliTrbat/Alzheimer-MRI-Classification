@@ -1,0 +1,5 @@
+Activation type: relu
+	-> Accuracy: 0.9136754274368286
+	-> Loss: 0.21888619661331177
+	-> Validation accuracy: 0.7123437523841858
+	-> Validation loss: 0.9858335256576538

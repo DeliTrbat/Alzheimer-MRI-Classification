@@ -1,0 +1,5 @@
+Activation type: leaky_relu
+	-> Accuracy: 0.8001
+	-> Loss: 0.4826
+	-> Validation accuracy: 0.5307
+	-> Validation loss: 1.2791

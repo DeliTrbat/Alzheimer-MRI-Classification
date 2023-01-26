@@ -447,10 +447,14 @@ def run_all_models_and_save_results():
 
     print("Simple models...")
     for activation_type in activation_types:
+        if activation_type == 'leaky_relu' or activation_type == 'relu':
+            continue
         print("Activation type: " + activation_type)
         simple_model = create_simple_model(activation_type)
         train_model(simple_model)
-        simple_model.save('./saved_models/simple_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+        tf.saved_model.save(simple_model,
+                            './saved_models/simple_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+        # simple_model.save('./saved_models/simple_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
         with open('./results/simple_model_activation_{0}_epochs_{1}.txt'.format(activation_type, EPOCHS), 'w') as f:
             f.write("Activation type: {0}\n".format(activation_type))
             f.write("\t-> Accuracy: {0}\n".format(str(simple_model.history.history['accuracy'][EPOCHS - 1])))
@@ -464,7 +468,9 @@ def run_all_models_and_save_results():
         print("Activation type: " + activation_type)
         custom_model = create_custom_model(activation_type)
         train_model(custom_model)
-        custom_model.save('./saved_models/custom_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+        tf.saved_model.save(custom_model,
+                            './saved_models/custom_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+        # custom_model.save('./saved_models/custom_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
         with open('./results/custom_model_activation_{0}_epochs_{1}.txt'.format(activation_type, EPOCHS), 'w') as f:
             f.write("Activation type: {0}\n".format(activation_type))
             f.write("\t-> Accuracy: {0}\n".format(str(custom_model.history.history['accuracy'][EPOCHS - 1])))

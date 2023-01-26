@@ -1,0 +1,5 @@
+Activation type: hyperbolic_tangent
+	-> Accuracy: 0.6978380084037781
+	-> Loss: 0.6790976524353027
+	-> Validation accuracy: 0.508984386920929
+	-> Validation loss: 1.3189239501953125

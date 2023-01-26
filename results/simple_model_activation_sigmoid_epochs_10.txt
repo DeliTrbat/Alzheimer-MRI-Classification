@@ -1,0 +1,5 @@
+Activation type: sigmoid
+	-> Accuracy: 0.47686898708343506
+	-> Loss: 1.7726130485534668
+	-> Validation accuracy: 0.3464062511920929
+	-> Validation loss: 1.571919560432434
