@@ -442,58 +442,58 @@ def choose_model():
 
 
 def run_all_models_and_save_results():
-    activation_types = ['relu', 'leaky_relu', 'sigmoid', 'hyperbolic_tangent']
-    print("Running all models and saving results...")
-
-    print("Simple models...")
-    for activation_type in activation_types:
-        if activation_type == 'leaky_relu' or activation_type == 'relu':
-            continue
-        print("Activation type: " + activation_type)
-        simple_model = create_simple_model(activation_type)
-        train_model(simple_model)
-        tf.saved_model.save(simple_model,
-                            './saved_models/simple_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
-        # simple_model.save('./saved_models/simple_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
-        with open('./results/simple_model_activation_{0}_epochs_{1}.txt'.format(activation_type, EPOCHS), 'w') as f:
-            f.write("Activation type: {0}\n".format(activation_type))
-            f.write("\t-> Accuracy: {0}\n".format(str(simple_model.history.history['accuracy'][EPOCHS - 1])))
-            f.write("\t-> Loss: {0}\n".format(str(simple_model.history.history['loss'][EPOCHS - 1])))
-            f.write("\t-> Validation accuracy: {0}\n".format(str(simple_model.history.history['val_accuracy'][EPOCHS - 1])))
-            f.write("\t-> Validation loss: {0}\n".format(str(simple_model.history.history['val_loss'][EPOCHS - 1])))
-        del simple_model
-
-    print("Custom models...")
-    for activation_type in activation_types:
-        print("Activation type: " + activation_type)
-        custom_model = create_custom_model(activation_type)
-        train_model(custom_model)
-        tf.saved_model.save(custom_model,
-                            './saved_models/custom_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
-        # custom_model.save('./saved_models/custom_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
-        with open('./results/custom_model_activation_{0}_epochs_{1}.txt'.format(activation_type, EPOCHS), 'w') as f:
-            f.write("Activation type: {0}\n".format(activation_type))
-            f.write("\t-> Accuracy: {0}\n".format(str(custom_model.history.history['accuracy'][EPOCHS - 1])))
-            f.write("\t-> Loss: {0}\n".format(str(custom_model.history.history['loss'][EPOCHS - 1])))
-            f.write("\t-> Validation accuracy: {0}\n".format(str(custom_model.history.history['val_accuracy'][EPOCHS - 1])))
-            f.write("\t-> Validation loss: {0}\n".format(str(custom_model.history.history['val_loss'][EPOCHS - 1])))
-        del custom_model
-
-    try:
-        print("VGG16 model")
-        change_batch_size(VGG16_MODEL_BATCH_SIZE)
-        change_epoch(VGG16_INCEPTION_V3_RESNET50_EPOCHS)
-        vgg16 = create_model_vgg16()
-        train_model(vgg16)
-        vgg16.save('./saved_models/vgg16_model_epochs_{0}.h5'.format(EPOCHS))
-        with open('./results/vgg16.txt', 'w') as f:
-            f.write("\t-> Accuracy: {0}\n".format(str(vgg16.history.history['accuracy'][EPOCHS - 1])))
-            f.write("\t-> Loss: {0}\n".format(str(vgg16.history.history['loss'][EPOCHS - 1])))
-            f.write("\t-> Validation accuracy: {0}\n".format(str(vgg16.history.history['val_accuracy'][EPOCHS - 1])))
-            f.write("\t-> Validation loss: {0}\n".format(str(vgg16.history.history['val_loss'][EPOCHS - 1])))
-        del vgg16
-    except Exception:
-        print("VGG16 model failed!")
+    # activation_types = ['relu', 'leaky_relu', 'sigmoid', 'hyperbolic_tangent']
+    # print("Running all models and saving results...")
+    #
+    # print("Simple models...")
+    # for activation_type in activation_types:
+    #     if activation_type == 'leaky_relu' or activation_type == 'relu':
+    #         continue
+    #     print("Activation type: " + activation_type)
+    #     simple_model = create_simple_model(activation_type)
+    #     train_model(simple_model)
+    #     tf.saved_model.save(simple_model,
+    #                         './saved_models/simple_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+    #     # simple_model.save('./saved_models/simple_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+    #     with open('./results/simple_model_activation_{0}_epochs_{1}.txt'.format(activation_type, EPOCHS), 'w') as f:
+    #         f.write("Activation type: {0}\n".format(activation_type))
+    #         f.write("\t-> Accuracy: {0}\n".format(str(simple_model.history.history['accuracy'][EPOCHS - 1])))
+    #         f.write("\t-> Loss: {0}\n".format(str(simple_model.history.history['loss'][EPOCHS - 1])))
+    #         f.write("\t-> Validation accuracy: {0}\n".format(str(simple_model.history.history['val_accuracy'][EPOCHS - 1])))
+    #         f.write("\t-> Validation loss: {0}\n".format(str(simple_model.history.history['val_loss'][EPOCHS - 1])))
+    #     del simple_model
+    #
+    # print("Custom models...")
+    # for activation_type in activation_types:
+    #     print("Activation type: " + activation_type)
+    #     custom_model = create_custom_model(activation_type)
+    #     train_model(custom_model)
+    #     tf.saved_model.save(custom_model,
+    #                         './saved_models/custom_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+    #     # custom_model.save('./saved_models/custom_model_activation_{0}_epochs_{1}.h5'.format(activation_type, EPOCHS))
+    #     with open('./results/custom_model_activation_{0}_epochs_{1}.txt'.format(activation_type, EPOCHS), 'w') as f:
+    #         f.write("Activation type: {0}\n".format(activation_type))
+    #         f.write("\t-> Accuracy: {0}\n".format(str(custom_model.history.history['accuracy'][EPOCHS - 1])))
+    #         f.write("\t-> Loss: {0}\n".format(str(custom_model.history.history['loss'][EPOCHS - 1])))
+    #         f.write("\t-> Validation accuracy: {0}\n".format(str(custom_model.history.history['val_accuracy'][EPOCHS - 1])))
+    #         f.write("\t-> Validation loss: {0}\n".format(str(custom_model.history.history['val_loss'][EPOCHS - 1])))
+    #     del custom_model
+    #
+    # try:
+    #     print("VGG16 model")
+    #     change_batch_size(VGG16_MODEL_BATCH_SIZE)
+    #     change_epoch(VGG16_INCEPTION_V3_RESNET50_EPOCHS)
+    #     vgg16 = create_model_vgg16()
+    #     train_model(vgg16)
+    #     vgg16.save('./saved_models/vgg16_model_epochs_{0}.h5'.format(EPOCHS))
+    #     with open('./results/vgg16.txt', 'w') as f:
+    #         f.write("\t-> Accuracy: {0}\n".format(str(vgg16.history.history['accuracy'][EPOCHS - 1])))
+    #         f.write("\t-> Loss: {0}\n".format(str(vgg16.history.history['loss'][EPOCHS - 1])))
+    #         f.write("\t-> Validation accuracy: {0}\n".format(str(vgg16.history.history['val_accuracy'][EPOCHS - 1])))
+    #         f.write("\t-> Validation loss: {0}\n".format(str(vgg16.history.history['val_loss'][EPOCHS - 1])))
+    #     del vgg16
+    # except Exception:
+    #     print("VGG16 model failed!")
 
     try:
         print("Inception V3 model")
